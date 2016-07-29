@@ -1,0 +1,26 @@
+load("/Users/dongjunchung/Google 드라이브/USB/research - 19. graph-GPA/1. graph-GPA/graphGPA/GGPA/data/simulation.RData")
+ls()
+simulation = SimulData
+str(simulation)
+simulation = list()
+simulation$pmat <- 1 - pnorm(SimulData$Y)
+hist(simulation$pmat)
+simulation = list()
+load("/Users/dongjunchung/Google 드라이브/USB/research - 19. graph-GPA/1. graph-GPA/graphGPA/GGPA/data/simulation.RData")#
+rm( list=ls() )#
+#
+load("/Users/dongjunchung/Google 드라이브/USB/research - 19. graph-GPA/1. graph-GPA/graphGPA/GGPA/data/simulation.RData")#
+#
+simulation = list()#
+simulation$pmat <- t( 1 - pnorm(SimulData$Y) )#
+simulation$true_E_mat <- t(SimulData$true_E_mat)#
+simulation$true_beta <- SimulData$true_beta#
+simulation$true_G <- SimulData$true_G#
+simulation$true_mu1 <- SimulData$true_mu1#
+simulation$true_sigma1 <- SimulData$true_sigma1#
+#
+str(simulation)
+load("/Users/dongjunchung/Google 드라이브/USB/research - 19. graph-GPA/1. graph-GPA/graphGPA/GGPA/data/simulation.RData")
+ls()
+str(simulation)
+q()
