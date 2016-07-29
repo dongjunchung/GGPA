@@ -1,5 +1,5 @@
-\name{GPA-package}
-\alias{GPA-package}
+\name{GGPA-package}
+\alias{GGPA-package}
 \docType{package}
 \title{
 graph-GPA
