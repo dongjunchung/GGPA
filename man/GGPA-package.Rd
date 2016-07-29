@@ -10,7 +10,7 @@ a statistical framework to prioritize GWAS results by integrating pleiotropy.
 }
 \details{
 \tabular{ll}{
-Package: \tab GPA\cr
+Package: \tab GGPA\cr
 Type: \tab Package\cr
 Version: \tab 0.9.1\cr
 Date: \tab 2016-07-31\cr
