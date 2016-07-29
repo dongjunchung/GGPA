@@ -1,7 +1,7 @@
 graph-GPA
 ===
 
-GPA is a graphical model for prioritizing GWAS results and investigating pleiotropic architecture. 'GGPA' package provides user friendly interface to fit graph-GPA models, implement association mapping, and generate a phenotype graph.
+graph-GPA is a graphical model for prioritizing GWAS results and investigating pleiotropic architecture. 'GGPA' package provides user friendly interface to fit graph-GPA models, implement association mapping, and generate a phenotype graph.
 
 Installation
 ===========
