@@ -303,6 +303,7 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
   #                                            #
 	##############################################
   
+  message("")
   message("Main MCMC iterations...")
   message("")
   
