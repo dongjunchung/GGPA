@@ -1,0 +1,6 @@
+{
+  "name": "GGPA",
+  "tagline": "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture",
+  "body": "graph-GPA\r\n===\r\n\r\nGPA is a graphical model for prioritizing GWAS results and investigating pleiotropic architecture. 'GGPA' package provides user friendly interface to fit graph-GPA models, implement association mapping, and generate a phenotype graph.\r\n\r\nInstallation\r\n===========\r\n\r\nTo install the development version of GGPA, it's easiest to use the 'devtools' package. Note that GGPA depends on the 'Rcpp' package, which also requires appropriate setting of Rtools and Xcode for Windows and Mac OS/X, respectively.\r\n\r\n```\r\n#install.packages(\"devtools\")\r\nlibrary(devtools)\r\ninstall_github(\"dongjunchung/GGPA\")\r\n```\r\n\r\nUsage\r\n===========\r\n\r\nThe following two help pages provide a good start point for the genetic analysis using GGPA package, including the overview of GGPA package and the example command lines:\r\n\r\n```\r\nlibrary(GGPA)\r\npackage?GGPA\r\nclass?GGPA\r\n```\r\n\r\nReferences\r\n==========\r\n\r\nChung D, Kim H, and Zhao H (2016), \"graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture.\"\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
