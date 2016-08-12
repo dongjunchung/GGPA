@@ -21,13 +21,11 @@ The R package vignette will provide a good start point for the genetic analysis 
 
 ```
 library(GGPA)
-package?GGPA
-class?GGPA
+vignette("GGPA-example")
 ```
 The following two help pages will also provide quick references for GGPA package and the example command lines:
 
 ```
-library(GGPA)
 package?GGPA
 class?GGPA
 ```
