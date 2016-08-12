@@ -17,7 +17,14 @@ install_github("dongjunchung/GGPA")
 Usage
 ===========
 
-The following two help pages provide a good start point for the genetic analysis using GGPA package, including the overview of GGPA package and the example command lines:
+The R package vignette will provide a good start point for the genetic analysis using GGPA package, including the overview of GGPA package and the example command lines:
+
+```
+library(GGPA)
+package?GGPA
+class?GGPA
+```
+The following two help pages will also provide quick references for GGPA package and the example command lines:
 
 ```
 library(GGPA)
