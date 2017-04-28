@@ -33,4 +33,4 @@ class?GGPA
 References
 ==========
 
-Chung D, Kim H, and Zhao H (2016), "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture."
+Chung D, Kim H, and Zhao H (2017), "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture," PLOS Computational Biology, 13(2): e1005388.
