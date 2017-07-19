@@ -7,12 +7,14 @@ Fit graph-GPA model
 Fit graph-GPA model.
 }
 \usage{
-GGPA( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-10, verbose=1 )
+GGPA( gwasPval, pgraph=NULL, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-10, verbose=1 )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
     \item{gwasPval}{p-value matrix from GWAS data,
-		where row and column correspond to SNP and phenotype, respectively. }
+		where row and column correspond to SNP and phenotype, respectively.}
+		\item{pgraph}{A binary matrix representing the prior phenotype graph,
+		where its rows and columns match the columns of \code{gwasPval}.}
     \item{nBurnin}{Number of burn-in iterations. Default is 10000.}
     \item{nMain}{Number of main MCMC iterations. Default is 40000.}
     \item{seedNum}{Random seed number. Default is 1234.}
@@ -24,7 +26,7 @@ GGPA( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-10, verbose=
   		Default is 1.} 
 }
 \details{
-\code{GGPA} fits the graph-GPA model. It requires to provide GWAS p-value to \code{gwasPval}. Based on this GGPA fit, \code{assoc} implements association mapping and \code{plot} provides a phenotype graph.
+\code{GGPA} fits the graph-GPA model. It requires to provide GWAS p-value to \code{gwasPval}. If a phenotype graph is provided in \code{pgraph}, it is utilized to guide the phenotype graph estimation. Based on this GGPA fit, \code{assoc} implements association mapping and \code{plot} provides a phenotype graph.
 }
 \value{
 Construct \code{GGPA} class object.
@@ -32,6 +34,9 @@ Construct \code{GGPA} class object.
 \references{
 Chung D, Kim H, and Zhao H (2016), 
 "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture."
+
+Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017),
+"Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA."
 }
 \author{
 Hang J. Kim and Dongjun Chung

@@ -88,8 +88,7 @@ In this simulation studies, we assume the three strongly correlated phenotypes (
 <<pgraph-show,eval=FALSE>>=
 adjmat <- simulation$true_G
 diag(adjmat) <- 0
-am.graph <- new( "graphAM", adjMat=adjmat, edgemode="undirected" )
-plot( am.graph )
+ggnet2( adjmat, label=TRUE, size=15 )
 @
 
 \begin{figure}[tb]
@@ -97,8 +96,7 @@ plot( am.graph )
 <<fig-pgraph,fig=TRUE,height=3,width=3,echo=FALSE>>=
 adjmat <- simulation$true_G
 diag(adjmat) <- 0
-am.graph <- new( "graphAM", adjMat=adjmat, edgemode="undirected" )
-plot( am.graph )
+plot( adjmat, size=15 )
 @
 \caption{\label{fig:pgraph} True phenotype graph for simulation studies.}
 \end{center}

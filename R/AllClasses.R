@@ -6,6 +6,7 @@ setClass( Class="GGPA",
     fit="list",
     summary="list",
 	  setting="list",
-    gwasPval="matrix"
+    gwasPval="matrix",
+    pgraph="matrix"
   )
 )

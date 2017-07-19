@@ -1,7 +1,7 @@
 
 # main GGPA function
 
-GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-10, verbose=1 ) {
+GGPA <- function( gwasPval, pgraph=NULL, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-10, verbose=1 ) {
   
 	
 	# summarizing setting for graph-GPA
@@ -24,6 +24,21 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
 	
 	if ( any( gwasPval < 0 | gwasPval > 1 ) ) {
 		stop( "Some p-values are smaller than zero or larger than one. p-value should be ranged between zero and one. Please check your p-value matrix." )
+	}
+	
+	
+	# check dimensions match between gwasPval and pgraph
+	
+	if ( !is.null(pgraph) ) {
+	  if ( ncol(gwasPval) == ncol(pgraph) ) {
+	    message( "Info: Prior phenotype graph is provided and will be used in the estimation." )
+	    mcmcSetting$usePgraph <- TRUE
+	  } else {
+	    stop( "Dimensions of the GWAS p-value matrix and the prior graph matrix do not match!" )
+	  }
+	} else {
+	  message( "Info: Uniform prior will be used for the phenotype graph in the estimation." )
+	  mcmcSetting$usePgraph <- FALSE
 	}
   
 	
@@ -49,7 +64,6 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
 			gwasPval[ gwasPval < lbPval ] <- lbPval
 		}
 	}
-	
 	
 	# probit transformation of p-values
 	
@@ -83,7 +97,7 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
   init_E[ Y<=0 ] <- 0 # Added for Ver_1_2_2
   model$E_mat = init_E
   
-  # initialize MRF (25% ceiling)
+  # initialize the phenotype graph (25% ceiling)
   
   prop_nonzero <- 0.25
   
@@ -101,13 +115,38 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
   	}
   }
   
+  # force in edges, if a phenotype graph is provided
+  
+  if ( !is.null(pgraph) ) {
+    # symmetrize the phenotype graph matrix
+    
+    for (i in 1:n_pheno){
+    	for (j in 1:n_pheno){ 
+    		pgraph[i,j] = max( pgraph[i,j], pgraph[j,i] )
+    	}
+    }
+    
+    # force in edges
+    
+    for (i in 1:n_pheno){
+    	for (j in 1:n_pheno){ 
+    		init_G[i,j] = max( init_G[i,j], pgraph[i,j] ) 
+    	}
+    }
+  } else {
+    pgraph <- matrix( 0, n_pheno, n_pheno )
+    rownames(pgraph) <- colnames(pgraph) <- colnames(gwasPval)
+  }
+  
+  # initialize MRF coefficients
+  
   init_beta = diag(-6,n_pheno)
   init_beta[ init_G == 1 ] <- 0.9
   
+  # Fixed Hyperparameters
+  
   model$Beta = init_beta
   model$G_mat = init_G
-  
-  # Fixed Hyperparameters
   
   model$theta_mu = 0 ; model$tau2_mu = 10000 ; # CHECK 0.0 is ok
   model$a_sigma = 0.5 ; model$b_sigma = 0.5 ;
@@ -115,6 +154,8 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
   model$a_beta = 4.0 ; model$b_beta = 2.0 ; model$stepsize_beta = 0.1 ; # Folder "65"
   model$a_betaG = 1.0 ; model$b_betaG = 1.0
   model$threshold_on = 4.3 ; # V 1.3.1  e_it = 1 if y_it > threshold_on
+  
+  model$E_forcein_mat = pgraph
   
   
 	##############################################
@@ -510,5 +551,5 @@ GGPA <- function( gwasPval, nBurnin=10000, nMain=40000, seedNum=1234, lbPval=1e-
 	# return object by creating GGPA class object
 	
   new( "GGPA",
-    fit = mcmcResult, summary = mcmcSummary, setting = mcmcSetting, gwasPval = gwasPval )
+    fit = mcmcResult, summary = mcmcSummary, setting = mcmcSetting, gwasPval = gwasPval, pgraph = pgraph )
 }

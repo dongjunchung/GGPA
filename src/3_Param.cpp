@@ -226,6 +226,10 @@ void CParam::S6_G_beta_ij(CData &Data) {
   double logP_numer, logP_denom ;
   double normC_prop ;
   
+  bool is_forcein_edge_selected = false ;
+  
+	// double P_G_q, P_G ; // For updated E(i,j)
+	
   // Step 1
   int w_cur = 0 ; int w_max = 0 ; int w_prop ; 
   for (int i=0; i<(n_pheno-1); i++){
@@ -244,8 +248,10 @@ void CParam::S6_G_beta_ij(CData &Data) {
   
   // Step 2
   if ( w_prop > w_cur  ){ // step 2-a
-    int id_added = rDiscrete(w_max-w_cur) + 1 ; // 1 ~ total. of empty edges
+    
+		int id_added = rDiscrete(w_max-w_cur) + 1 ; // 1 ~ total. of empty edges
     int count_empty_edge = 0 ;
+		
     for (int i=0; i<(n_pheno-1); i++){
       for (int j=(i+1); j<n_pheno; j++){
         if ( G_mat(i,j)==0 ){
@@ -257,6 +263,11 @@ void CParam::S6_G_beta_ij(CData &Data) {
             Beta_prop(j,i) = Beta_prop(i,j) ; 
             id_added = -9 ; 
             
+						// if ( Data.PriorSetting==2 ){
+						//	P_G = 1.0 - Data.priorprob_G(i,j) ; // Bernoulli(E_ij=0; p_ij)
+						//	P_G_q = Data.priorprob_G(i,j) ; // Bernoulli(E_ij^q=1; p_ij)
+						// }
+												
             logP_numer = R::dgamma(Beta_prop(i,j),Data.a_beta,(1.0/Data.b_beta),1) ; // f(beta_ij^q|G_ij^q)
             logP_denom = 0 ; // f(beta_ij|G_ij) cancelled with q(beta_ij)
             normC_prop = normC_fn(Beta_prop, Data) ;
@@ -268,15 +279,18 @@ void CParam::S6_G_beta_ij(CData &Data) {
             }
             logQ_numer = logQ_numer + 0 ; // q(beta_ij) cancelled with f(beta_ij|G_ij)  
             logQ_denom = logQ_denom + R::dgamma(Beta_prop(i,j),Data.a_betaG,(1.0/Data.b_betaG),1) ; // q(beta_ij^q)
-          }
-        } 
-      } 
-    }
+          } // if ( id_added==count_empty_edge ) 
+        } // for ( G_mat(i,j)==0 )
+      } // for (j)
+    } // for (i)
+		
     logQ_numer = logQ_numer - log(w_cur) ; // q(G|G^q,w)
     logQ_denom = logQ_denom - log(w_max-w_cur)  ; // q(G^q|G,w^q)
-  } else { // step 2-b
+  
+	} else { // step 2-b
+	
     int id_deleted = rDiscrete(w_cur)+1 ; // 1 ~ total no. of connected edges
-    int count_connected_edge = 0 ;
+    int count_connected_edge = 0 ; 
     for (int i=0; i<(n_pheno-1); i++){
       for (int j=(i+1); j<n_pheno; j++){
         if ( G_mat(i,j)==1 ){
@@ -287,6 +301,15 @@ void CParam::S6_G_beta_ij(CData &Data) {
             Beta_prop(j,i) = Beta_prop(i,j) ; 
             id_deleted = -9 ; 
             
+            if (Data.isforcein==true){
+              if (Data.E_forcein_mat(i,j)==1) is_forcein_edge_selected = true ; 
+            }
+            
+						// if ( Data.PriorSetting==2 ){
+						//	P_G = Data.priorprob_G(i,j) ; // Bernoulli(E_ij=1; p_ij)
+						//	P_G_q = 1.0 - Data.priorprob_G(i,j) ; // Bernoulli(E_ij^q=0; p_ij)
+						// }
+						
             logP_numer = 0 ; // f(beta_ij^q|G_ij^q) cancelled with q(beta_ij^q)
             logP_denom = R::dgamma(Beta(i,j),Data.a_beta,(1.0/Data.b_beta),1) ; // f(beta_ij|G_ij)
             normC_prop = normC_fn(Beta_prop, Data) ;
@@ -304,12 +327,23 @@ void CParam::S6_G_beta_ij(CData &Data) {
     }
     logQ_numer = logQ_numer - log(w_max-w_cur) ; // q(G|G^q,w)
     logQ_denom = logQ_denom - log(w_cur) ; // q(G^q|G,w^q)
+    
   }
-  if ( w_prop > 0 ) logP_numer = logP_numer - log(w_prop) ; // f(G^q) // if w_prop=0, let 1/w_prop = 1, so that log(w_prop) = 0
-  if ( w_cur > 0 ) logP_denom = logP_denom - log(w_cur) ; // f(G) // if w_cur=0, let 1/w_cur = 1, so that log(w_cur) = 0
+	
+	// if ( Data.PriorSetting==1 ){
+	  if ( w_prop > 0 ) logP_numer = logP_numer - log(w_prop) ; // f(G^q) // if w_prop=0, let 1/w_prop = 1, so that log(w_prop) = 0
+	  if ( w_cur > 0 ) logP_denom = logP_denom - log(w_cur) ; // f(G) // if w_cur=0, let 1/w_cur = 1, so that log(w_cur) = 0
+	// }
+	// if ( Data.PriorSetting==2 ){
+	//  if ( w_prop > 0 ) logP_numer = logP_numer + log(P_G_q) ; 
+	//  if ( w_cur > 0 ) logP_denom = logP_denom + log(P_G) ; 
+	// }
 
   // Step 3  
   double accept_prob = exp( logP_numer - logP_denom + logQ_numer - logQ_denom ) ; 
+  
+  if (is_forcein_edge_selected==true) accept_prob = 0 ;
+  
   accept_prob_vec(5) = accept_prob ;  
   RandVec = Rcpp::runif(1, 0, 1) ; 
   if ( accept_prob >= RandVec(0) ){

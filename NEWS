@@ -1,0 +1,12 @@
+   
+Changes in version 0.9.5:
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+   o GGPA(): Allow to incorporate a prior phenotype graph.
+   
+   o plot(): use GGally (ggnet2) instead of Rgraphviz for the phenotype graph visualization.
+
+Changes in version 0.9.1:
+
+   o The first version of GGPA R package.

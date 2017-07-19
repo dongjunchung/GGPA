@@ -41,6 +41,9 @@ Hang J. Kim and Dongjun Chung
 Chung D, Kim H, and Zhao H (2016), 
 "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture."
 
+Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017),
+"Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA."
+
 Newton MA, Noueiry A, Sarkar D, and Ahlquist P (2004),
 "Detecting differential gene expression with a semiparametric hierarchical mixture method,"
 \emph{Biostatistics}, Vol. 5, pp. 155-176.

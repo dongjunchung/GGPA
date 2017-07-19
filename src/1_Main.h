@@ -23,7 +23,9 @@ class CMain {
 		void Setsig2_vec(arma::vec sig2_vec_); arma::vec Getsig2_vec();
     void SetBeta(arma::mat Beta_); arma::mat GetBeta();
     void SetG_mat(arma::mat G_mat); arma::mat GetG_mat();
-				
+		
+		void SetE_forcein_mat(arma::mat E_forcein_mat_); arma::mat GetE_forcein_mat();
+		
 		// Hyperparameters	
 		void Settheta_mu(double theta_mu_) ; double Gettheta_mu() ;  
 		void Settau2_mu(double tau2_mu_) ; double Gettau2_mu() ;
@@ -38,7 +40,9 @@ class CMain {
 		void Seta_betaG(double a_betaG_) ; double Geta_betaG() ;
 		void Setb_betaG(double b_betaG_) ; double Getb_betaG() ;
 		void Setthreshold_on(double threshold_on_) ; double Getthreshold_on() ;
-		
+		void SetPriorSetting(int PriorSetting_) ; int GetPriorSetting() ;
+		void Setpriorprob_G(arma::mat priorprob_G_) ; arma::mat Getpriorprob_G() ;
+						
 		// Print data or result
 		arma::mat GetY();
 		arma::vec GetAccept() ; arma::vec GetAccProb();
@@ -46,6 +50,8 @@ class CMain {
 		double GetlogPost() ;
 		double Getloglikelihood() ;
 		arma::cube Getsum_E_ijt() ;
+		
+		bool Getisforcein() ;
 		
   private:
     

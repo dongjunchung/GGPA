@@ -19,6 +19,9 @@ public:
   double a_beta, b_beta, stepsize_beta ;
   double a_betaG, b_betaG ; 
   double threshold_on ; 
+	// int PriorSetting ; arma::mat priorprob_G ; 
+	
+	arma::mat E_forcein_mat ; bool isforcein ;
 	
 	int msg_level ; // 0: errors only; 1: errors and warnings; 2: errors, warnings and information
 	// bool OptionEit ; // TRUE: store E_it directly from c++
@@ -55,6 +58,9 @@ class CParam {
   // MCMC
   void iterate(int iter, CData &Data, int n_simul);
   
+  // Function
+  double normC_fn(arma::mat Beta_input, CData &Data) ; 
+  
 private:
   
   // For random number 
@@ -69,9 +75,6 @@ private:
 	void S6_G_beta_ij(CData &Data);
 	
 	void store_Eit(CData &Data); 
-	
-  // Function
-  double normC_fn(arma::mat Beta_input, CData &Data) ; 
 	
   // Distribution
   double rinvgamma(double alpha, double beta);

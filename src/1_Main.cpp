@@ -37,7 +37,10 @@ RCPP_MODULE(cGGPAmodule){
 	.property("a_betaG", &CMain::Geta_betaG,  &CMain::Seta_betaG, "Get a_betaG")
 	.property("b_betaG", &CMain::Getb_betaG,  &CMain::Setb_betaG, "Get b_betaG")
   .property("threshold_on", &CMain::Getthreshold_on,  &CMain::Setthreshold_on, "Get threshold_on")
-		
+	// .property("PriorSetting", &CMain::GetPriorSetting,  &CMain::SetPriorSetting, "Get PriorSetting")		
+	// .property("priorprob_G", &CMain::Getpriorprob_G,  &CMain::Setpriorprob_G, "Get priorprob_G")		
+  .property("E_forcein_mat", &CMain::GetE_forcein_mat, &CMain::SetE_forcein_mat, "Forced-in graph structure")
+	
 	// Print data or result 
 	.property("Y.input", &CMain::GetY, "Input Data")
 	.property("Accept", &CMain::GetAccept, "Are Proposals Accepted")
@@ -46,6 +49,8 @@ RCPP_MODULE(cGGPAmodule){
 	// .property("logPost", &CMain::GetlogPost, "logPost") // tricky to calculate the delta function in f(beta_ij|G_ij)
   .property("loglikelihood", &CMain::Getloglikelihood, "loglikelihood")	
   .property("sum_E_ijt", &CMain::Getsum_E_ijt, "sum_E_ijt")
+	
+	.property("isforcein", &CMain::Getisforcein, "isforcein")
   
   ;
 }       
@@ -53,11 +58,14 @@ RCPP_MODULE(cGGPAmodule){
 CMain::CMain(arma::mat Y_) {
   Data.Y = Y_ ;	
   IterCount = 0 ;
+  
+  Data.isforcein = false ;
 }
 
 CMain::~CMain(){ } //Destructor
 
 void CMain::Initialize() { Param.Initialize(Data) ; }
+
 void CMain::check_random_generate() { Param.check_random_generate(Data) ; }
 void CMain::Iterate() {
   IterCount++;
@@ -126,6 +134,16 @@ void CMain::Setb_betaG(double b_betaG_) { Data.b_betaG = b_betaG_ ; }
 double CMain::Getb_betaG() { return Data.b_betaG ; }
 void CMain::Setthreshold_on(double threshold_on_) { Data.threshold_on = threshold_on_ ; }
 double CMain::Getthreshold_on() { return Data.threshold_on ; }
+// void CMain::SetPriorSetting(int PriorSetting_) { Data.PriorSetting = PriorSetting_ ; }
+// int CMain::GetPriorSetting() { return Data.PriorSetting ; }
+// void CMain::Setpriorprob_G(arma::mat priorprob_G_) { Data.priorprob_G = priorprob_G_ ; }
+// arma::mat CMain::Getpriorprob_G() { return Data.priorprob_G ; }
+void CMain::SetE_forcein_mat(arma::mat E_forcein_mat_) { 
+  Data.E_forcein_mat = E_forcein_mat_ ; 
+  Data.isforcein = true ; 
+}
+arma::mat CMain::GetE_forcein_mat() { return Data.E_forcein_mat ; }
+bool CMain::Getisforcein() { return Data.isforcein ; }
 
 arma::mat CMain::GetY() { return Data.Y ; }
 arma::vec CMain::GetAccept() { return Param.is_accept_vec ; }

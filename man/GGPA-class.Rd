@@ -26,6 +26,8 @@ Objects can be created by calls of the form \code{new("GGPA", ...)}.
     	representing the setting for graph-GPA model fitting. }
     \item{\code{gwasPval}:}{Object of class \code{"matrix"}, 
     		representing the p-value matrix from GWAS data. }
+    \item{\code{pgraph}:}{Object of class \code{"matrix"}, 
+    		representing the prior phenotype graph. }
   }
 }
 \section{Methods}{
@@ -46,6 +48,9 @@ Objects can be created by calls of the form \code{new("GGPA", ...)}.
 \references{
 Chung D, Kim H, and Zhao H (2016), 
 "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture."
+
+Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017),
+"Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA."
 }
 \author{ Hang J. Kim, Dongjun Chung }
 \seealso{

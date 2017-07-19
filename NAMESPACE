@@ -1,5 +1,5 @@
 useDynLib(GGPA)
-import( Rcpp, stats, methods, graphics, Rgraphviz )
+import( Rcpp, stats, methods, graphics, GGally )
 exportPattern("^[[:alpha:]]+")
 exportClasses(Rcpp_cGGPA)
 export( GGPA, assoc )

@@ -49,6 +49,12 @@ setMethod(
     cat( "Data summary:\n" )
     cat( "\tNumber of GWAS data: ", nGWAS , "\n", sep="" )
 		cat( "\tNumber of SNPs: ", nBin , "\n", sep="" )
+		cat( "Use a prior phenotype graph? " )
+		if ( object@setting$usePgraph == TRUE ) {
+		  cat( "YES\n" )
+		} else {
+		  cat( "NO\n" )
+		}
 		cat( "mu\n", sep="" )
 		print(MU)
 		cat( "sigma\n", sep="" )
@@ -87,11 +93,13 @@ setMethod(
     # graph construction	
     
     adjmat <- round(P_hat,2) > pCutoff & P_lb_beta > 0
-    rownames(adjmat) <- colnames(adjmat) <- Names
+    if ( !is.null(Names) ) {
+      Names <- 1:n_pheno
+    } else {
+      rownames(adjmat) <- colnames(adjmat) <- Names
+    }
     
-    am.graph <- new( "graphAM", adjMat=adjmat, edgemode="undirected" )
-    am.graph
-    plot( am.graph )
+    ggnet2( adjmat, label=TRUE, size=15 )
   }
 )
 
