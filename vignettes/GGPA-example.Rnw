@@ -38,12 +38,13 @@ $~^6$ VA Cooperative Studies Program Coordinating Center, West Haven, CT, USA.
 \SweaveOpts{engine=R, echo=TRUE, pdf=TRUE}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 %\VignetteIndexEntry{GGPA}
 %\VignetteKeywords{GGPA}
 %\VignettePackage{GGPA}
 \maketitle
 
-%\tableofcontents
+\tableofcontents
 
 \section{Overview}
 
@@ -64,9 +65,11 @@ library("GGPA")
 
 \noindent
 This vignette is organized as follows.
-Section \ref{fitting} discusses how to fit graph-GPA model.
-Section \ref{association} explains command lines for association mapping using graph-GPA.
-Section \ref{plot} discusses command lines to generate a graph describing the genetic relationship among phenotypes.
+Section \ref{workflow} describes the overall graph-GPA analysis workflow \cite{GGPA} including model fitting (Section \ref{fitting}), association mapping (Section \ref{association}), and visualization of an estimate phenotype graph (Section \ref{plot}). 
+%Section \ref{fitting} discusses how to fit graph-GPA model.
+%Section \ref{association} explains command lines for association mapping using graph-GPA.
+%Section \ref{plot} discusses command lines to generate a graph describing the genetic relationship among phenotypes.
+Section \ref{ddnet} illustrates how a prior disease graph can be queried and downloaded from the graph-GPA companion webiste and incorporated to the graph-GPA analysis workflow \cite{LGGPA}.
 
 \section{Workflow}\label{workflow}
 
@@ -105,7 +108,7 @@ plot( adjmat, size=15 )
 \subsection{Fitting the graph-GPA Model}\label{fitting}
 
 We are now ready to fit a graph-GPA model using the GWAS $p$-value data described above (\texttt{simulation\$pmat}). R package \texttt{GGPA} provides flexible analysis framework and automatically adjusts its model structure based on the provided data. Users can fit the graph-GPA model with the command:
-<<GFPA-show,eval=FALSE>>=
+<<GGPA-show,eval=FALSE>>=
 set.seed(12345)
 fit <- GGPA( simulation$pmat )
 @
@@ -180,9 +183,56 @@ plot(fit)
 \end{center}
 \end{figure}
 
+\section{graph-GPA Analysis Using a Prior Disease Graph}\label{ddnet}
+
+The graph-GPA was initially based on an uninformative prior disease graph \cite{GGPA} but later extended by allowing users to incorporate an informative prior disease graph \cite{LGGPA}. Specifically, we proposed to generate a prior disease graph based on the gene sharing pattern between diseases in the literature mining. While we showed that this approach effectively improves the graph-GPA analysis in the sense of estimation accuracy, robustness against the collinearity, and reproducibilities between independent validation dataasets \cite{LGGPA}, it still remains burdensome for most users to implement this literature mining. Hence, in order to facilitate users' convenience, we developed \textit{DDNet} (\url{http://www.chunglab.io/ddnet/}), a web interface that allows users to query diseases of interest, investigate relationships among them visually, and download the adjency matrix for the graph-GPA analysis.
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics{ddnet_step1.png}
+\caption{\label{fig:ddnet1} DDNet web interface: Step 1. Enter \url{http://www.chunglab.io/ddnet/} in your web browser.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics{ddnet_step2.png}
+\caption{\label{fig:ddnet2} DDNet web interface: Step 2. Enter a list of diseases. Click ``Try Example'' for an example list of diseases.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics{ddnet_step3.png}
+\caption{\label{fig:ddnet3} DDNet web interface: Step 3. Investigate a disease-disease network visually.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics{ddnet_step4.png}
+\caption{\label{fig:ddnet4} DDNet web interface: Step 4. Download an adjacency matrix for the \texttt{graph-GPA} analysis.}
+\end{center}
+\end{figure}
+
+First, if you open the web address \url{http://www.chunglab.io/ddnet/} in your web browser, you can see the web interface that looks like Figure \ref{fig:ddnet1}. In the left side, you can a box and you can query diseases of interest. If you want to try an example list of diseases, just click ``Try Example'' on the top (Figure \ref{fig:ddnet2}). Alternatively, you can upload a text file of disease names of interest using the ``Upload'' button. Note that we constructed our disease dictionary using the Disease Ontology database (\url{http://disease-ontology.org/}). Hence, if you cannot find a disease of your interest, please check the Disease Ontology database. Then, please click the ``Submit'' button.
+
+Upon clicking the ``Submit'' button, you will see a network of the diseases you queried in the right side, as depcited in Figure \ref{fig:ddnet3}. By either using a bar of typing a value below the ``Cut-Off Value'' section, you can dynamically investigate disease network structures. Here, an edge is connected between a pair of diseases if the corresponding partial correlation coefficient is larger than the specified cut-off. If you click ``Download'' button, you can also download the disease network plot in PNG file format.
+
+If you click the ``Table'' tab above the disease graph, you can check the adjency matrix corresponding to the disease network for the specified cut-off (Figure \ref{fig:ddnet4}). You can also check the raw partial correlation coefficient matrix by clicking the ``Raw Matrix'' tab below the ``Table'' tab. By clicking ``Download'' button, you can download the adjacency matrix in the CSV file format and this can be used as a direct input for the \texttt{GGPA} package.
+
+Supposed that the downloaded CSV file is loaded to the R environment with the object name \texttt{pgraph} while the \texttt{pmat} has the corresponding genotype-phenotype association $p$-value matrix. Note that it is assumed that objects \texttt{pgraph} and \texttt{pmat} have the same number of columns and also share the same column names. Then, you can fit a graph-GPA model using the downloaded disease network as a prior distribution using the following command line. Other functions will work exactly in the same way as described in Section \ref{workflow}.
+
+<<GGPA-pgraph-show,eval=FALSE>>=
+fit <- GGPA( pmat, pgraph )
+@
+
 \begin{thebibliography}{99}
-\bibitem{GGPA} Chung D*, Yang C*, Li C, Gelernter J, and Zhao H (2013), 
-``graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture.''
+\bibitem{GGPA} Chung D, Kim H, and Zhao H (2017), 
+``graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture,''
+\textit{PLOS Computational Biology}, 13(2): e1005388.
+\bibitem{LGGPA} Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017), 
+``Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA.''
 \end{thebibliography}
 
 \end{document}

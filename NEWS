@@ -1,11 +1,19 @@
+      
+Changes in version 0.9.6:
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+   o The vignette was updated by incorporating the illustration of the workflow to download the prior disease graph from the companion website (http://www.chunglab.io/ddnet).
    
+   o plot(): Improve visualization, e.g., using a circle mode.
+
 Changes in version 0.9.5:
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
    o GGPA(): Allow to incorporate a prior phenotype graph.
    
-   o plot(): use GGally (ggnet2) instead of Rgraphviz for the phenotype graph visualization.
+   o plot(): Use GGally (ggnet2) instead of Rgraphviz for the phenotype graph visualization.
 
 Changes in version 0.9.1:
 

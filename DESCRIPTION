@@ -1,10 +1,10 @@
 Package: GGPA
 Type: Package
 Title: graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture
-Version: 0.9.5
-Date: 2017-07-31
-Author: Hang J. Kim, Dongjun Chung
-Maintainer: Hang J. Kim <hang.kim@uc.edu>, Dongjun Chung <dongjun.chung@gmail.com>
+Version: 0.9.6
+Date: 2018-01-15
+Author: Dongjun Chung, Hang J. Kim
+Maintainer: Dongjun Chung <dongjun.chung@gmail.com>, Hang J. Kim <hang.kim@uc.edu>
 Description: This package provides functions for fitting graph-GPA, a statistical framework to prioritize GWAS results by integrating pleiotropy. 
 License: GPL (>= 2)
 URL: https://github.com/dongjunchung/GGPA/

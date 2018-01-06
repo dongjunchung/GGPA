@@ -99,7 +99,8 @@ setMethod(
       rownames(adjmat) <- colnames(adjmat) <- Names
     }
     
-    ggnet2( adjmat, label=TRUE, size=15 )
+    ggnet2( adjmat, label=TRUE, mode="circle", 
+      color="lightblue", label.size=7, node.size=20, edge.size=1 )
   }
 )
 

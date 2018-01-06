@@ -47,7 +47,7 @@ Objects can be created by calls of the form \code{new("GGPA", ...)}.
 }
 \references{
 Chung D, Kim H, and Zhao H (2016), 
-"graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture."
+"graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture," 13(2): e1005388
 
 Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017),
 "Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA."

@@ -12,8 +12,8 @@ a statistical framework to prioritize GWAS results by integrating pleiotropy.
 \tabular{ll}{
 Package: \tab GGPA\cr
 Type: \tab Package\cr
-Version: \tab 0.9.5\cr
-Date: \tab 2017-07-31\cr
+Version: \tab 0.9.6\cr
+Date: \tab 2018-01-15\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
@@ -31,7 +31,7 @@ Maintainer: Hang J. Kim <hang.kim@uc.edu>, Dongjun Chung <dongjun.chung@gmail.co
 }
 \references{
 Chung D, Kim H, and Zhao H (2016), 
-"graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture."
+"graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture," 13(2): e1005388
 
 Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017),
 "Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA."
