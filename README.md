@@ -1,7 +1,14 @@
 graph-GPA
 ===
 
-graph-GPA is a graphical model for prioritizing GWAS results and investigating pleiotropic architecture. 'GGPA' package provides user-friendly interface to fit graph-GPA models, implement association mapping, and generate a phenotype graph. From its version 0.9.5, it also allows to utilize a prior phenotype graph.
+graph-GPA is a graphical model for prioritizing GWAS results and investigating pleiotropic architecture (Chung et al., 2017). 'GGPA' package provides user-friendly interface to fit graph-GPA models, implement association mapping, and generate a phenotype graph. From its version 0.9.5, it also allows to utilize a prior phenotype graph (Kim et al., 2017).
+
+DDNet
+===
+
+DDNet is a web interface to infer the disease-disease network from the literature mining. Using DDNet, users can query diseases of interest, investigate relationship among these diseases visually and dynamically, and download various information including an adjacency matrix. This adjacency matrix can be used as a prior phenotype graph to guide the estimation of pleiotropic architecture. Please refer Kim et al. (2017) and the R package vignette for more details. DDNet is accessible from the following web address: 
+
+http://chunglab.io/ddnet/
 
 Installation
 ===========
