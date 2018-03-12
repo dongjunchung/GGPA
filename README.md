@@ -42,4 +42,4 @@ References
 
 Chung D, Kim H, and Zhao H (2017), "graph-GPA: A graphical model for prioritizing GWAS results and investigating pleiotropic architecture," PLOS Computational Biology, 13(2): e1005388.
 
-Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2017), "Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA"
+Kim H, Yu Z, Lawson A, Zhao H, and Chung D (2018), "Improving SNP prioritization and pleiotropic architecture estimation by incorporating prior knowledge using graph-GPA," Bioinformatics, bty061.
